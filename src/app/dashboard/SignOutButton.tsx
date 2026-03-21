@@ -18,7 +18,7 @@ export function SignOutButton() {
     <button 
       onClick={handleSignOut}
       title="Sign Out"
-      className="bg-slate-100 hover:bg-slate-200 text-navy p-2 rounded-full transition-colors"
+      className="bg-white/10 hover:bg-white/20 text-white p-2 rounded-full transition-colors"
     >
       <LogOut className="w-4 h-4" />
     </button>

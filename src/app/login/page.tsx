@@ -9,21 +9,21 @@ export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true)
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 overflow-hidden relative">
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse" style={{ animationDelay: '2s' }}></div>
+    <div className="min-h-screen flex items-center justify-center p-4 overflow-hidden relative">
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-screen filter blur-3xl opacity-50 animate-pulse"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/20 rounded-full mix-blend-screen filter blur-3xl opacity-50 animate-pulse" style={{ animationDelay: '2s' }}></div>
       
       <motion.div 
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
-        className="w-full max-w-md bg-white/80 backdrop-blur-xl border border-slate-200 rounded-[2rem] p-8 shadow-2xl relative z-10"
+        className="w-full max-w-md bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2rem] p-8 shadow-2xl relative z-10"
       >
         <div className="flex flex-col items-center mb-8">
-          <div className="w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-5 ring-1 ring-primary/30">
+          <div className="w-14 h-14 bg-primary/20 text-primary rounded-2xl flex items-center justify-center mb-5 ring-1 ring-primary/30">
             <Building2 className="w-7 h-7" />
           </div>
-          <h1 className="text-3xl font-extrabold text-navy mb-2 tracking-tight">
+          <h1 className="text-3xl font-extrabold text-white mb-2 tracking-tight">
             {isLogin ? 'Welcome back' : 'Create account'}
           </h1>
           <p className="text-graytext text-sm text-center font-medium">
@@ -33,7 +33,7 @@ export default function LoginPage() {
 
         <form className="space-y-5">
           <div className="space-y-1.5">
-            <label className="text-sm font-semibold text-navy ml-1">Email</label>
+            <label className="text-sm font-semibold text-white ml-1">Email</label>
             <div className="relative">
               <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-graytext" />
               <input 
@@ -41,13 +41,13 @@ export default function LoginPage() {
                 type="email" 
                 required
                 placeholder="you@example.com"
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-11 pr-4 text-navy placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all font-medium"
+                className="w-full bg-black/20 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white placeholder:text-graytext/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all font-medium"
               />
             </div>
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-semibold text-navy ml-1">Password</label>
+            <label className="text-sm font-semibold text-white ml-1">Password</label>
             <div className="relative">
               <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-graytext" />
               <input 
@@ -55,7 +55,7 @@ export default function LoginPage() {
                 type="password" 
                 required
                 placeholder="••••••••"
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-11 pr-4 text-navy placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all font-medium"
+                className="w-full bg-black/20 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white placeholder:text-graytext/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all font-medium"
               />
             </div>
           </div>
@@ -73,7 +73,7 @@ export default function LoginPage() {
           <button 
             onClick={() => setIsLogin(!isLogin)}
             type="button"
-            className="text-graytext hover:text-primary text-sm font-semibold transition-colors"
+            className="text-graytext hover:text-white text-sm font-semibold transition-colors"
           >
             {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
           </button>

@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @theme {
   --color-foreground: var(--foreground);
@@ -9,15 +7,15 @@
   --color-primary: #209dd7;
   --color-secondary: #753991;
   --color-navy: #032147;
-  --color-graytext: #888888;
+  --color-graytext: #a1a1aa;
 }
 
 :root {
-  --background: #f8fafc;
-  --foreground: #032147;
+  --background: #0f172a;
+  --foreground: #f8fafc;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
 }
