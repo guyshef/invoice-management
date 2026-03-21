@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Plus, X, Folder, Calendar } from 'lucide-react'
+import { X, Folder, Calendar } from 'lucide-react'
 import { addFolder } from './actions'
 
 export function AddFolderModal({ companyId, currentYear }: { companyId: string, currentYear: number }) {

@@ -3,7 +3,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 
-export async function addCompany(prevState: any, formData: FormData) {
+export async function addCompany(prevState: { error?: string, success?: boolean } | null, formData: FormData) {
   const supabase = await createClient()
 
   const name = formData.get('name') as string

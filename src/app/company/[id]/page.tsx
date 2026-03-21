@@ -5,7 +5,7 @@ import { UploadInvoiceModal } from './UploadInvoiceModal'
 import { AddFolderModal } from './AddFolderModal'
 import { AddYearModal } from './AddYearModal'
 import { FolderActions } from './FolderActions'
-import { Building2, Receipt, Folder, ExternalLink, Calendar, ChevronRight } from 'lucide-react'
+import { Receipt, Folder, ExternalLink, Calendar, ChevronRight } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
 
@@ -50,7 +50,7 @@ export default async function CompanyPage({
     availableYears.push(currentYear)
   }
 
-  let activeYear = resolvedParams.year ? parseInt(resolvedParams.year) : (availableYears[0] || currentYear)
+  const activeYear = resolvedParams.year ? parseInt(resolvedParams.year) : (availableYears[0] || currentYear)
   
   if (!availableYears.includes(activeYear)) {
     availableYears.push(activeYear)
@@ -65,7 +65,7 @@ export default async function CompanyPage({
   const activeFolder = yearFolders.find(f => f.id === activeFolderId)
 
   // Fetch invoices if a folder is selected
-  let invoices: any[] = []
+  let invoices: Array<{ id: string, vendor_name: string, date: string, amount: number, file_url: string }> = []
   if (activeFolderId) {
     const { data } = await supabase
       .from('invoices')

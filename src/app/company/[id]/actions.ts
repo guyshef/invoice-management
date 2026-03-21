@@ -18,7 +18,7 @@ export async function uploadInvoice(companyId: string, folderId: string, formDat
   const fileExt = file.name.split('.').pop()
   const fileName = `${companyId}/${folderId}/${crypto.randomUUID()}.${fileExt}`
 
-  const { data: uploadData, error: uploadError } = await supabase.storage
+  const { error: uploadError } = await supabase.storage
     .from('invoices')
     .upload(fileName, file)
 
