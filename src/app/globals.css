@@ -5,11 +5,16 @@
 @theme {
   --color-foreground: var(--foreground);
   --color-background: var(--background);
+  --color-accent: #ecad0a;
+  --color-primary: #209dd7;
+  --color-secondary: #753991;
+  --color-navy: #032147;
+  --color-graytext: #888888;
 }
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --background: #f8fafc;
+  --foreground: #032147;
 }
 
 body {
