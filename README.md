@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LLC Invoice Manager
 
-## Getting Started
+A premium, SaaS-grade web application built to help business owners effortlessly manage their LLCs, organize vendor invoices, and track expenses across multiple fiscal years.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Multi-LLC Management**: Seamlessly add and switch between multiple companies from a unified Dashboard.
+- **Deep Folder Organization**: File invoices within a structured nested system: `Company` → `Year` → `Category Folder` (e.g., Tax, Insurance).
+- **Pro Folder Features**: Effortlessly create, safely rename, and selectively delete category folders.
+- **Secure File Storage**: Upload and manage PDF and Image invoices directly into your organized folders via Supabase Storage.
+- **Tier-1 SaaS UI Architecture**: 
+  - **Split-Pane Layout**: An intuitive desktop layout mimicking professional tools like AWS and Google Drive.
+  - **Segmented Control Tabs**: Effortless, zero-overlap year-swapping navigation.
+  - **Actionable Empty States**: Beautiful, large ghost-icon placeholders that guide users directly to their next action (like Quick Upload).
+  - **Breadcrumb Navigation**: Instantly know exactly where you are in the application.
+- **Custom Aesthetic**: A beautiful Charcoal Navy (`#0f172a`) theme replacing standard harsh dark modes, paired perfectly with the ultra-clean **Inter** font family.
+- **Enterprise-Grade Security**: Full user authentication powered by Supabase Auth with Row-Level Security (RLS) guaranteeing absolute data isolation.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠 Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: [Next.js 16.2](https://nextjs.org/) (App Router & Server Actions)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS, standardizing on soft drop-shadows, rounded-md interactive elements, and subtle primary radiants.
+- **Icons & Animation**: Lucide React + Framer Motion
+- **Database, Auth & Storage**: [Supabase](https://supabase.com/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ⚙️ Local Development Setup
 
-## Learn More
+1. **Clone the repository** and install dependencies:
+   ```bash
+   npm install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Configure your environment**:
+   Create a `.env.local` file in the root directory and add your Supabase credentials:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Initialize the Database Schema**:
+   Run the provided `supabase_schema.sql` script directly in your Supabase SQL Editor. This script configures the:
+   - `companies`, `folders`, and `invoices` tables
+   - Supabase Storage buckets
+   - Row-Level Security (RLS) Policies (including the powerful `FOR ALL` policy for native Rename/Delete access)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. **Launch the Development Server**:
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🌟 Recent Version Updates
+- Converted navigation to a horizontal segmented-control year format inside a dedicated Left Sidebar.
+- Fully implemented Folder renaming and cascading deletions.
+- Global UI shifted to Inter font and slate-900 (Navy Charcoal) for superior contrast and eye-comfort.
+- Added Tax ID badging to the breadcrumb header.

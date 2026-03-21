@@ -20,10 +20,33 @@ CREATE POLICY "Users can insert their own companies."
   ON public.companies FOR INSERT
   WITH CHECK ( auth.uid() = user_id );
 
--- 2. Create Invoices Table
+-- 2. Create Folders Table
+CREATE TABLE public.folders (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  company_id uuid REFERENCES public.companies ON DELETE CASCADE NOT NULL,
+  year integer NOT NULL,
+  name text NOT NULL,
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- Enable RLS for Folders
+ALTER TABLE public.folders ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can manage folders of their own companies."
+  ON public.folders FOR ALL
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.companies 
+      WHERE companies.id = folders.company_id 
+      AND companies.user_id = auth.uid()
+    )
+  );
+
+-- 3. Create Invoices Table
 CREATE TABLE public.invoices (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   company_id uuid REFERENCES public.companies ON DELETE CASCADE NOT NULL,
+  folder_id uuid REFERENCES public.folders ON DELETE CASCADE,
   vendor_name text NOT NULL,
   amount numeric(10, 2) NOT NULL,
   file_url text NOT NULL,
@@ -34,8 +57,8 @@ CREATE TABLE public.invoices (
 -- Enable RLS for Invoices
 ALTER TABLE public.invoices ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Users can only view invoices of their own companies."
-  ON public.invoices FOR SELECT
+CREATE POLICY "Users can manage invoices of their own companies."
+  ON public.invoices FOR ALL
   USING (
     EXISTS (
       SELECT 1 FROM public.companies 
@@ -44,16 +67,6 @@ CREATE POLICY "Users can only view invoices of their own companies."
     )
   );
 
-CREATE POLICY "Users can insert invoices to their own companies."
-  ON public.invoices FOR INSERT
-  WITH CHECK (
-    EXISTS (
-      SELECT 1 FROM public.companies 
-      WHERE companies.id = invoices.company_id 
-      AND companies.user_id = auth.uid()
-    )
-  );
-
--- 3. Storage Bucket Instructions
+-- 4. Storage Bucket Instructions
 -- In the Supabase dashboard, create a storage bucket named 'invoices', 
 -- and allow authenticated users to Upload and Select objects.
