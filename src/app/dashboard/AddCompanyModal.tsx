@@ -51,58 +51,67 @@ export function AddCompanyModal() {
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="relative w-full max-w-md bg-[#032147] border border-white/20 rounded-[2rem] p-6 shadow-2xl z-10 overflow-hidden"
+              className="relative w-full max-w-md bg-white border border-slate-200 rounded-[2.5rem] p-8 shadow-[0_20px_50px_rgba(3,33,71,0.15)] z-10 overflow-hidden"
             >
-              <div className="absolute top-0 left-0 w-full h-1 bg-accent"></div>
+              <div className="absolute top-0 left-0 w-full h-2 bg-primary"></div>
 
-              <div className="flex items-center justify-between mb-6 pt-2">
-                <h3 className="text-xl font-extrabold tracking-tight text-white">New Company</h3>
+              <div className="flex items-center justify-between mb-8 pt-4">
+                <div>
+                  <h3 className="text-2xl font-black tracking-tight text-navy">New Company</h3>
+                  <p className="text-graytext text-sm font-medium mt-1">Register a new LLC to manage</p>
+                </div>
                 <button 
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="p-2 hover:bg-white/10 rounded-full text-graytext hover:text-white transition-colors"
+                  className="p-2.5 hover:bg-slate-50 rounded-full text-graytext hover:text-navy transition-colors shrink-0"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-6 h-6" />
                 </button>
               </div>
 
               {error && (
-                <div className="mb-4 text-sm text-red-300 bg-red-500/10 p-3 rounded-xl border border-red-500/20 font-medium">
+                <div className="mb-6 text-sm text-red-600 bg-red-50 p-4 rounded-2xl border border-red-100 font-bold">
                   {error}
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-1.5">
-                  <label className="text-sm font-bold text-white ml-1">Company Name *</label>
-                  <div className="relative">
-                    <Building className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-[11px] font-bold uppercase tracking-widest text-graytext ml-1">Company Name <span className="text-red-500">*</span></label>
+                  <div className="relative group">
+                    <Building className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-primary transition-colors" />
                     <input 
                       name="name"
                       required
+                      autoFocus
                       placeholder="Acme Corp LLC"
-                      className="w-full bg-black/20 border border-white/10 rounded-xl py-2.5 pl-10 pr-4 text-white placeholder:text-graytext/50 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-semibold text-sm"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3.5 pl-12 pr-4 text-navy font-bold placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-sm font-bold text-white ml-1">Tax ID / EIN</label>
-                  <div className="relative">
-                    <Tag className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-graytext" />
+                <div className="space-y-2">
+                  <label className="text-[11px] font-bold uppercase tracking-widest text-graytext ml-1">Tax ID / EIN</label>
+                  <div className="relative group">
+                    <Tag className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-primary transition-colors" />
                     <input 
                       name="tax_id"
                       placeholder="Optional"
-                      className="w-full bg-black/20 border border-white/10 rounded-xl py-2.5 pl-10 pr-4 text-white placeholder:text-graytext/50 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-semibold text-sm"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3.5 pl-12 pr-4 text-navy font-bold placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm"
                     />
                   </div>
                 </div>
 
                 <button
                   disabled={isPending}
-                  className="w-full bg-secondary hover:bg-secondary/90 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl py-3 mt-4 transition-all active:scale-[0.98] shadow-lg shadow-secondary/20"
+                  className="w-full bg-secondary hover:bg-secondary/90 disabled:opacity-50 disabled:cursor-not-allowed text-white font-black py-4 mt-6 transition-all active:scale-[0.98] shadow-xl shadow-secondary/20 rounded-2xl inline-flex items-center justify-center gap-2"
                 >
-                  {isPending ? 'Creating...' : 'Create Company'}
+                  {isPending ? 'Establishing...' : (
+                    <>
+                      <Plus className="w-5 h-5" />
+                      Create Company
+                    </>
+                  )}
                 </button>
               </form>
             </motion.div>

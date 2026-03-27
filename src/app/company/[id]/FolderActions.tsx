@@ -18,14 +18,22 @@ export function FolderActions({ companyId, folderId, currentName }: { companyId:
     }
     const formData = new FormData()
     formData.append('name', newName)
-    await renameFolder(companyId, folderId, formData)
-    setIsRenaming(false)
+    const result = await renameFolder(companyId, folderId, formData)
+    if (result?.error) {
+      alert(result.error)
+    } else {
+      setIsRenaming(false)
+    }
   }
 
   const handleDelete = async () => {
     if (confirm(`Are you sure you want to delete "${currentName}" and ALL its invoices? This cannot be undone.`)) {
-      await deleteFolder(companyId, folderId)
-      router.push(`/company/${companyId}`)
+      const result = await deleteFolder(companyId, folderId)
+      if (result?.error) {
+        alert(result.error)
+      } else {
+        router.push(`/company/${companyId}`)
+      }
     }
   }
 

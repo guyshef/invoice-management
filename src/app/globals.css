@@ -7,15 +7,16 @@
   --color-primary: #209dd7;
   --color-secondary: #753991;
   --color-navy: #032147;
-  --color-graytext: #a1a1aa;
+  --color-graytext: #888888;
 }
 
 :root {
-  --background: #0f172a;
-  --foreground: #f8fafc;
+  --background: #f8fafc; /* bg-slate-50 equivalent */
+  --foreground: #032147; /* navy */
 }
 
 body {
-  background-color: var(--background) !important;
-  color: var(--foreground) !important;
+  background-color: var(--background);
+  color: var(--foreground);
 }
+

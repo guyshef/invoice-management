@@ -2,10 +2,22 @@
 
 import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
+import { cookies } from 'next/headers'
+
+export async function addYear(companyId: string, year: number) {
+  const cookieStore = await cookies()
+  const key = `added_years_${companyId}`
+  const existing = cookieStore.get(key)?.value
+  const years: number[] = existing ? JSON.parse(existing) : []
+  if (!years.includes(year)) {
+    years.push(year)
+  }
+  cookieStore.set(key, JSON.stringify(years), { path: '/', maxAge: 60 * 60 * 24 * 365 })
+}
 
 export async function uploadInvoice(companyId: string, folderId: string, formData: FormData) {
   const supabase = await createClient()
-  
+
   const file = formData.get('file') as File
   const vendor_name = formData.get('vendor_name') as string
   const amount = parseFloat(formData.get('amount') as string)
@@ -57,6 +69,11 @@ export async function addFolder(companyId: string, formData: FormData) {
 
   if (!name || isNaN(year)) {
     return { error: 'Missing folder name or year' }
+  }
+
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    return { error: 'Not authenticated' }
   }
 
   const { error } = await supabase
