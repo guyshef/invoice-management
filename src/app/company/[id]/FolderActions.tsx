@@ -4,8 +4,16 @@ import { useState } from 'react'
 import { Edit2, Trash2, X, Check } from 'lucide-react'
 import { renameFolder, deleteFolder } from './actions'
 import { useRouter } from 'next/navigation'
+import { AddFolderModal } from './AddFolderModal'
 
-export function FolderActions({ companyId, folderId, currentName }: { companyId: string, folderId: string, currentName: string }) {
+interface FolderActionsProps {
+  companyId: string
+  folderId: string
+  currentName: string
+  folderYear: number
+}
+
+export function FolderActions({ companyId, folderId, currentName, folderYear }: FolderActionsProps) {
   const [isRenaming, setIsRenaming] = useState(false)
   const [newName, setNewName] = useState(currentName)
   const router = useRouter()
@@ -40,7 +48,7 @@ export function FolderActions({ companyId, folderId, currentName }: { companyId:
   if (isRenaming) {
     return (
       <form onSubmit={handleRename} className="flex items-center gap-2">
-        <input 
+        <input
           autoFocus
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
@@ -58,14 +66,21 @@ export function FolderActions({ companyId, folderId, currentName }: { companyId:
 
   return (
     <div className="flex items-center gap-2 ml-4">
-      <button 
+      <AddFolderModal
+        companyId={companyId}
+        currentYear={folderYear}
+        parentId={folderId}
+        parentName={currentName}
+        compact
+      />
+      <button
         onClick={() => setIsRenaming(true)}
         title="Rename Folder"
         className="p-1.5 rounded-md text-slate-400 hover:bg-slate-700 hover:text-white transition-colors"
       >
         <Edit2 className="w-4 h-4" />
       </button>
-      <button 
+      <button
         onClick={handleDelete}
         title="Delete Folder"
         className="p-1.5 rounded-md text-slate-400 hover:bg-red-500/20 hover:text-red-400 transition-colors"

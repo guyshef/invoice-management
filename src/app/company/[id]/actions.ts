@@ -1,8 +1,16 @@
 'use server'
 
 import { createClient } from '@/utils/supabase/server'
+import { createClient as createAdminClient } from '@supabase/supabase-js'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
+
+function createServiceClient() {
+  return createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
 
 export async function addYear(companyId: string, year: number) {
   const cookieStore = await cookies()
@@ -17,6 +25,7 @@ export async function addYear(companyId: string, year: number) {
 
 export async function uploadInvoice(companyId: string, folderId: string, formData: FormData) {
   const supabase = await createClient()
+  const adminSupabase = createServiceClient()
 
   const file = formData.get('file') as File
   const vendor_name = formData.get('vendor_name') as string
@@ -30,12 +39,12 @@ export async function uploadInvoice(companyId: string, folderId: string, formDat
   const fileExt = file.name.split('.').pop()
   const fileName = `${companyId}/${folderId}/${crypto.randomUUID()}.${fileExt}`
 
-  const { error: uploadError } = await supabase.storage
+  const { error: uploadError } = await adminSupabase.storage
     .from('invoices')
     .upload(fileName, file)
 
   if (uploadError) {
-    return { error: 'Failed to upload file to storage.' }
+    return { error: `Failed to upload file to storage: ${uploadError.message}` }
   }
 
   const { data: { publicUrl } } = supabase.storage
@@ -66,6 +75,7 @@ export async function addFolder(companyId: string, formData: FormData) {
   const supabase = await createClient()
   const name = formData.get('name') as string
   const year = parseInt(formData.get('year') as string)
+  const parent_id = (formData.get('parent_id') as string) || null
 
   if (!name || isNaN(year)) {
     return { error: 'Missing folder name or year' }
@@ -78,7 +88,7 @@ export async function addFolder(companyId: string, formData: FormData) {
 
   const { error } = await supabase
     .from('folders')
-    .insert([{ company_id: companyId, name, year }])
+    .insert([{ company_id: companyId, name, year, parent_id }])
 
   if (error) {
     return { error: `DB Error: ${error.message}` }
